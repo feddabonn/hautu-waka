@@ -1,0 +1,101 @@
+{
+  "intro": "The mycorrhizal network — the underground connections that feed this work. Sources, influences, and readings that shaped the framework.",
+  "categories": [
+    {
+      "id": "whakapapa",
+      "name": "Whakapapa",
+      "description": "Direct lineage — the people and organisations this work comes from.",
+      "items": [
+        {
+          "name": "Rereata Makiha",
+          "role": "Guidance and cultural grounding",
+          "link": null
+        },
+        {
+          "name": "Roimata Taniwha-Pao'o",
+          "role": "Framework development",
+          "link": null
+        },
+        {
+          "name": "Ayla Hoeta",
+          "role": "Framework development",
+          "link": null
+        },
+        {
+          "name": "The Southern Initiative",
+          "role": "Organisational home",
+          "link": "https://www.tsi.nz"
+        },
+        {
+          "name": "Auckland Co-Design Lab",
+          "role": "Development context",
+          "link": null
+        }
+      ]
+    },
+    {
+      "id": "frameworks",
+      "name": "Frameworks",
+      "description": "Conceptual structures that inform the approach.",
+      "items": [
+        {
+          "name": "Te Whare Tapa Whā",
+          "author": "Mason Durie",
+          "description": "Māori wellbeing model — four walls and foundation",
+          "link": null
+        },
+        {
+          "name": "Sphere Intelligence",
+          "author": "Chellie Spiller, Hoturoa Barclay-Kerr, John Panoho",
+          "description": "Multi-dimensional knowing beyond square intelligence",
+          "link": null
+        },
+        {
+          "name": "Wayfinding Leadership",
+          "author": "Chellie Spiller, Hoturoa Barclay-Kerr, John Panoho",
+          "description": "Navigation principles applied to leadership",
+          "link": null
+        }
+      ]
+    },
+    {
+      "id": "tools-origins",
+      "name": "Tool Origins",
+      "description": "Where the tools came from.",
+      "items": [
+        {
+          "name": "6 Thinking Hats",
+          "author": "Edward de Bono",
+          "link": null
+        },
+        {
+          "name": "6 Conditions of Systems Change",
+          "author": "FSG",
+          "link": "https://www.fsg.org/resource/water_of_systems_change/"
+        },
+        {
+          "name": "Two Loops Model",
+          "author": "Berkana Institute",
+          "link": null
+        },
+        {
+          "name": "Pixar Story Spine",
+          "author": "Kenn Adams / Pixar",
+          "link": null
+        }
+      ]
+    },
+    {
+      "id": "readings",
+      "name": "Readings",
+      "description": "Books, papers, and articles that shaped the thinking.",
+      "items": [
+        {
+          "title": "[To be added]",
+          "author": null,
+          "link": null
+        }
+      ]
+    }
+  ]
+}

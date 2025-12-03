@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hautū Waka — Navigating Complexity</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ========== BASE STYLES ========== */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Raleway', sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #333333;
+            background: #FAFAFA;
+        }
+        
+        /* ========== LAYOUT ========== */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .section {
+            padding: 80px 0;
+        }
+        
+        .section:nth-child(even) {
+            background: #F5F5F5;
+        }
+        
+        /* ========== TYPOGRAPHY ========== */
+        h1 {
+            font-size: 36px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 8px;
+        }
+        
+        h2 {
+            font-size: 32px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 16px;
+        }
+        
+        h3 {
+            font-size: 22px;
+            font-weight: 600;
+            line-height: 1.2;
+            margin-bottom: 12px;
+        }
+        
+        h4 {
+            font-size: 18px;
+            font-weight: 600;
+            line-height: 1.2;
+            margin-bottom: 8px;
+        }
+        
+        p {
+            margin-bottom: 16px;
+        }
+        
+        a {
+            color: #1A7F8E;
+            text-decoration: none;
+        }
+        
+        a:hover {
+            color: #156A77;
+            text-decoration: underline;
+        }
+        
+        .subtitle {
+            font-size: 20px;
+            color: #666666;
+            margin-bottom: 24px;
+        }
+        
+        .hook {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 32px;
+        }
+        
+        .section-intro {
+            font-size: 16px;
+            color: #666666;
+            margin-bottom: 32px;
+        }
+        
+        /* ========== INTRODUCTION ========== */
+        .section-intro {
+            text-align: center;
+        }
+        
+        .section-intro .container {
+            max-width: 700px;
+        }
+        
+        .intro-block {
+            text-align: left;
+            margin-bottom: 24px;
+        }
+        
+        .intro-block h3 {
+            font-size: 18px;
+            color: #1A7F8E;
+            margin-bottom: 8px;
+        }
+        
+        .attribution {
+            margin-top: 40px;
+            padding-top: 24px;
+            border-top: 1px solid #E0E0E0;
+            font-size: 14px;
+            color: #666666;
+        }
+        
+        .attribution p {
+            margin-bottom: 4px;
+        }
+        
+        /* ========== DIAGRAM SECTION ========== */
+        .section-diagram {
+            background: white;
+            text-align: center;
+        }
+        
+        .diagram-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .diagram-wrapper {
+            position: relative;
+            display: inline-block;
+            max-width: 100%;
+        }
+        
+        .diagram-wrapper img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .diagram-instruction {
+            margin-bottom: 24px;
+            font-size: 14px;
+            color: #666666;
+        }
+        
+        /* Hotspots */
+        .hotspot {
+            position: absolute;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: box-shadow 0.2s ease;
+        }
+        
+        .hotspot:hover {
+            box-shadow: 0 0 0 4px rgba(26, 127, 142, 0.3);
+        }
+        
+        /* ========== STAGE OVERLAY ========== */
+        .overlay-backdrop {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+        
+        .overlay-backdrop.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .stage-overlay {
+            background: white;
+            max-width: 550px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+            padding: 32px;
+            position: relative;
+        }
+        
+        .overlay-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666666;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .overlay-close:hover {
+            color: #333333;
+        }
+        
+        .stage-name {
+            margin-bottom: 24px;
+        }
+        
+        .stage-name h3 {
+            font-size: 24px;
+            margin-bottom: 4px;
+        }
+        
+        .stage-name .english {
+            font-size: 16px;
+            color: #666666;
+            font-weight: 400;
+        }
+        
+        .stage-content h4 {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1A7F8E;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 20px;
+            margin-bottom: 8px;
+        }
+        
+        .stage-content p {
+            margin-bottom: 12px;
+        }
+        
+        .reflection-questions {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .reflection-questions li {
+            padding-left: 20px;
+            position: relative;
+            margin-bottom: 8px;
+        }
+        
+        .reflection-questions li::before {
+            content: "—";
+            position: absolute;
+            left: 0;
+            color: #1A7F8E;
+        }
+        
+        .stage-tools {
+            margin-top: 24px;
+            padding-top: 16px;
+            border-top: 1px solid #E0E0E0;
+        }
+        
+        .stage-tools-label {
+            font-size: 14px;
+            color: #666666;
+            margin-bottom: 8px;
+        }
+        
+        .tool-tag {
+            display: inline-block;
+            background: #E8F4F6;
+            color: #1A7F8E;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 14px;
+            margin-right: 8px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+        
+        .tool-tag:hover {
+            background: #D0EAEE;
+            text-decoration: none;
+        }
+        
+        /* ========== TOOLS SECTION ========== */
+        .section-tools .container {
+            max-width: 800px;
+        }
+        
+        .tool-entry {
+            padding: 32px 0;
+            border-bottom: 1px solid #E0E0E0;
+        }
+        
+        .tool-entry:last-child {
+            border-bottom: none;
+        }
+        
+        .tool-entry h3 {
+            color: #333333;
+        }
+        
+        .tool-entry .description {
+            margin-bottom: 16px;
+        }
+        
+        .tool-entry .meta {
+            font-size: 14px;
+        }
+        
+        .tool-entry .meta-label {
+            color: #666666;
+            margin-right: 8px;
+        }
+        
+        .tool-entry .stages {
+            margin-bottom: 8px;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-right: 4px;
+        }
+        
+        .badge-stage {
+            background: #F0F0F0;
+            color: #666666;
+        }
+        
+        .muscle-link {
+            display: inline-block;
+            margin-right: 8px;
+            margin-bottom: 4px;
+        }
+        
+        /* ========== MUSCLES SECTION ========== */
+        .section-muscles .container {
+            max-width: 800px;
+        }
+        
+        .dimension {
+            margin-bottom: 48px;
+        }
+        
+        .dimension h3 {
+            color: #1A7F8E;
+            margin-bottom: 8px;
+        }
+        
+        .dimension-english {
+            font-weight: 400;
+            color: #666666;
+        }
+        
+        .dimension-description {
+            font-size: 14px;
+            color: #666666;
+            margin-bottom: 24px;
+        }
+        
+        .muscle-entry {
+            padding: 20px 0;
+            border-bottom: 1px solid #E0E0E0;
+        }
+        
+        .muscle-entry:last-child {
+            border-bottom: none;
+        }
+        
+        .muscle-entry h4 {
+            color: #333333;
+        }
+        
+        .muscle-entry .description {
+            margin-bottom: 12px;
+        }
+        
+        .muscle-entry .meta {
+            font-size: 14px;
+        }
+        
+        .muscle-entry .meta-label {
+            color: #666666;
+        }
+        
+        .tool-link {
+            display: inline-block;
+            margin-right: 8px;
+        }
+        
+        .no-tools {
+            color: #999999;
+            font-style: italic;
+        }
+        
+        /* ========== SOURCES SECTION ========== */
+        .section-sources .container {
+            max-width: 800px;
+        }
+        
+        .sources-grid {
+            display: grid;
+            gap: 32px;
+        }
+        
+        .source-category h3 {
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+        
+        .category-description {
+            font-size: 14px;
+            color: #666666;
+            margin-bottom: 16px;
+        }
+        
+        .source-category ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .source-category li {
+            padding: 8px 0;
+            border-bottom: 1px solid #E0E0E0;
+        }
+        
+        .source-category li:last-child {
+            border-bottom: none;
+        }
+        
+        /* ========== VIDEO EMBEDS ========== */
+        .video-embed {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            margin: 16px 0;
+        }
+        
+        .video-embed iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        /* ========== NAVIGATION ========== */
+        .nav-fixed {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            z-index: 900;
+            padding: 12px 20px;
+            display: none;
+        }
+        
+        .nav-fixed.visible {
+            display: block;
+        }
+        
+        .nav-fixed nav {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            gap: 24px;
+            justify-content: center;
+        }
+        
+        .nav-fixed a {
+            font-size: 14px;
+            font-weight: 500;
+            color: #666666;
+        }
+        
+        .nav-fixed a:hover {
+            color: #1A7F8E;
+        }
+        
+        /* Back to top */
+        .back-to-top {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: #1A7F8E;
+            color: white;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            z-index: 800;
+            border: none;
+            font-size: 20px;
+        }
+        
+        .back-to-top.visible {
+            display: flex;
+        }
+        
+        .back-to-top:hover {
+            background: #156A77;
+        }
+        
+        /* ========== SCROLL TARGET HIGHLIGHT ========== */
+        .highlight-target {
+            animation: highlightFade 1.5s ease;
+        }
+        
+        @keyframes highlightFade {
+            0% { background-color: #E8F4F6; }
+            100% { background-color: transparent; }
+        }
+        
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 768px) {
+            .section {
+                padding: 48px 0;
+            }
+            
+            h1 {
+                font-size: 28px;
+            }
+            
+            h2 {
+                font-size: 24px;
+            }
+            
+            .stage-overlay {
+                padding: 24px;
+                border-radius: 8px 8px 0 0;
+                max-height: 80vh;
+            }
+            
+            .overlay-backdrop.active {
+                align-items: flex-end;
+            }
+            
+            .tool-tag {
+                display: block;
+                margin-right: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Fixed Navigation -->
+    <div class="nav-fixed" id="nav-fixed">
+        <nav>
+            <a href="#diagram">Diagram</a>
+            <a href="#tools">Tools</a>
+            <a href="#muscles">Muscles</a>
+            <a href="#sources">Sources</a>
+        </nav>
+    </div>
+    
+    <!-- Introduction Section -->
+    {{INTRO_SECTION}}
+    
+    <!-- Diagram Section -->
+    <section id="diagram" class="section section-diagram">
+        <div class="diagram-container">
+            <p class="diagram-instruction">Click any stage to explore</p>
+            <div class="diagram-wrapper" id="diagram-wrapper">
+                <img src="HautuWakaProcess.png" alt="Hautū Waka Process Diagram" id="diagram-image">
+                <!-- Hotspots will be generated by JavaScript -->
+            </div>
+        </div>
+    </section>
+    
+    <!-- Stage Overlay -->
+    <div class="overlay-backdrop" id="overlay-backdrop">
+        <div class="stage-overlay" id="stage-overlay">
+            <button class="overlay-close" id="overlay-close">×</button>
+            <div class="stage-name">
+                <h3 id="overlay-name-maori"></h3>
+                <span class="english" id="overlay-name-english"></span>
+            </div>
+            <div class="stage-content">
+                <h4>As a stage</h4>
+                <p id="overlay-as-stage"></p>
+                <h4>As a state</h4>
+                <p id="overlay-as-state"></p>
+                <h4>Reflection questions</h4>
+                <ul class="reflection-questions" id="overlay-questions"></ul>
+            </div>
+            <div class="stage-tools">
+                <p class="stage-tools-label">Tools for this stage:</p>
+                <div id="overlay-tools"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Tools Section -->
+    {{TOOLS_SECTION}}
+    
+    <!-- Muscles Section -->
+    {{MUSCLES_SECTION}}
+    
+    <!-- Sources Section -->
+    {{SOURCES_SECTION}}
+    
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="back-to-top">↑</button>
+    
+    <script>
+        // Stage data
+        const stages = {{STAGE_DATA}};
+        
+        // DOM elements
+        const diagramWrapper = document.getElementById('diagram-wrapper');
+        const diagramImage = document.getElementById('diagram-image');
+        const overlayBackdrop = document.getElementById('overlay-backdrop');
+        const stageOverlay = document.getElementById('stage-overlay');
+        const overlayClose = document.getElementById('overlay-close');
+        const navFixed = document.getElementById('nav-fixed');
+        const backToTop = document.getElementById('back-to-top');
+        
+        // Create hotspots when image loads
+        diagramImage.addEventListener('load', createHotspots);
+        if (diagramImage.complete) createHotspots();
+        
+        function createHotspots() {
+            // Remove existing hotspots
+            document.querySelectorAll('.hotspot').forEach(h => h.remove());
+            
+            stages.forEach(stage => {
+                const hotspot = document.createElement('div');
+                hotspot.className = 'hotspot';
+                hotspot.dataset.stageId = stage.id;
+                hotspot.style.left = stage.hotspot.x_percent + '%';
+                hotspot.style.top = stage.hotspot.y_percent + '%';
+                hotspot.style.width = stage.hotspot.width_percent + '%';
+                hotspot.style.height = stage.hotspot.height_percent + '%';
+                hotspot.addEventListener('click', () => openStageOverlay(stage));
+                diagramWrapper.appendChild(hotspot);
+            });
+        }
+        
+        function openStageOverlay(stage) {
+            document.getElementById('overlay-name-maori').textContent = stage.name_maori;
+            document.getElementById('overlay-name-english').textContent = stage.name_english;
+            document.getElementById('overlay-as-stage').textContent = stage.as_stage;
+            document.getElementById('overlay-as-state').textContent = stage.as_state;
+            
+            // Questions
+            const questionsList = document.getElementById('overlay-questions');
+            questionsList.innerHTML = '';
+            stage.reflection_questions.forEach(q => {
+                const li = document.createElement('li');
+                li.textContent = q;
+                questionsList.appendChild(li);
+            });
+            
+            // Tools
+            const toolsContainer = document.getElementById('overlay-tools');
+            toolsContainer.innerHTML = '';
+            stage.tools.forEach(tool => {
+                const tag = document.createElement('a');
+                tag.className = 'tool-tag';
+                tag.textContent = tool.name;
+                tag.href = '#tool-' + tool.id;
+                tag.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    closeOverlay();
+                    scrollToElement('tool-' + tool.id);
+                });
+                toolsContainer.appendChild(tag);
+            });
+            
+            overlayBackdrop.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeOverlay() {
+            overlayBackdrop.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        // Close overlay events
+        overlayClose.addEventListener('click', closeOverlay);
+        overlayBackdrop.addEventListener('click', (e) => {
+            if (e.target === overlayBackdrop) closeOverlay();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeOverlay();
+        });
+        
+        // Scroll to element with highlight
+        function scrollToElement(id) {
+            const element = document.getElementById(id);
+            if (element) {
+                const offset = navFixed.classList.contains('visible') ? 60 : 0;
+                const top = element.getBoundingClientRect().top + window.pageYOffset - offset - 20;
+                window.scrollTo({ top, behavior: 'smooth' });
+                
+                // Highlight after scroll
+                setTimeout(() => {
+                    element.classList.add('highlight-target');
+                    setTimeout(() => element.classList.remove('highlight-target'), 1500);
+                }, 500);
+            }
+        }
+        
+        // Add scroll handlers to all internal links
+        document.querySelectorAll('a[href^="#"]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                const href = link.getAttribute('href');
+                if (href.startsWith('#tool-') || href.startsWith('#muscle-')) {
+                    e.preventDefault();
+                    scrollToElement(href.substring(1));
+                }
+            });
+        });
+        
+        // Fixed nav visibility
+        const introSection = document.getElementById('introduction');
+        window.addEventListener('scroll', () => {
+            const introBottom = introSection.offsetTop + introSection.offsetHeight;
+            if (window.pageYOffset > introBottom) {
+                navFixed.classList.add('visible');
+                backToTop.classList.add('visible');
+            } else {
+                navFixed.classList.remove('visible');
+                backToTop.classList.remove('visible');
+            }
+        });
+        
+        // Back to top
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        
+        // Recalculate hotspots on resize
+        window.addEventListener('resize', createHotspots);
+    </script>
+</body>
+</html>

@@ -1,0 +1,201 @@
+[
+  {
+    "id": "emotional-culture-deck",
+    "name": "Emotional Culture Deck",
+    "description": "Teams use emotion cards to surface how they want to feel at work, how they don't want to feel, and what behaviours create those feelings. Makes emotional culture visible and discussable.",
+    "stages": ["whakariterite", "te-rapunga", "te-whainga", "te-whiwhinga"],
+    "muscles": [
+      "emotional-awareness-and-processing",
+      "relational-intelligence",
+      "collective-sense-making",
+      "recognition-and-reciprocity",
+      "mindfulness-and-presence"
+    ],
+    "video": null,
+    "source": null
+  },
+  {
+    "id": "more-than-words",
+    "name": "More Than Words (Imagery Cards)",
+    "description": "Visual prompts help people access thoughts, feelings, memories they struggle to articulate verbally. Used in facilitation, counselling, reflection work.",
+    "stages": ["te-rapunga", "te-kitenga"],
+    "muscles": [
+      "emotional-awareness-and-processing",
+      "multiple-ways-of-knowing",
+      "mindfulness-and-presence",
+      "sensory-perception",
+      "comfort-with-mystery-and-uncertainty",
+      "purpose-and-orientation"
+    ],
+    "video": null,
+    "source": null
+  },
+  {
+    "id": "6-conditions",
+    "name": "6 Conditions of Systems Change",
+    "description": "FSG framework for analysing systems across six conditions — three explicit (policies, practices, resource flows) and three implicit (relationships, power dynamics, mental models). Used to diagnose where change efforts should focus.",
+    "stages": ["te-kitenga"],
+    "muscles": [
+      "pattern-recognition-and-triangulation",
+      "relational-intelligence",
+      "environmental-awareness-and-immersion",
+      "multiple-ways-of-knowing",
+      "cyclic-and-non-linear-thinking",
+      "collective-sense-making"
+    ],
+    "video": null,
+    "source": "FSG"
+  },
+  {
+    "id": "te-whare-tapa-wha",
+    "name": "Te Whare Tapa Whā",
+    "description": "Framework for assessing holistic wellbeing — checking in across Tinana, Wairua, Whānau, Hinengaro, and Whenua. Can be individual or collective reflection.",
+    "stages": ["whakariterite", "te-rapunga", "te-whiwhinga"],
+    "muscles": [
+      "body-awareness-and-somatic-intelligence",
+      "emotional-awareness-and-processing",
+      "relational-intelligence",
+      "purpose-and-orientation",
+      "rootedness-and-belonging",
+      "multiple-ways-of-knowing",
+      "mindfulness-and-presence"
+    ],
+    "video": null,
+    "source": "Mason Durie"
+  },
+  {
+    "id": "theory-of-change",
+    "name": "Theory of Change",
+    "description": "Maps causal pathways from activities to outcomes (If, By, Then, & Then, & Eventually). Forces articulation of assumptions about how change happens.",
+    "stages": ["whakariterite", "te-whainga"],
+    "muscles": [
+      "pattern-recognition-and-triangulation",
+      "purpose-and-orientation",
+      "collective-sense-making",
+      "cyclic-and-non-linear-thinking",
+      "comfort-with-mystery-and-uncertainty"
+    ],
+    "video": null,
+    "source": null
+  },
+  {
+    "id": "deeper-questions",
+    "name": "Deeper Questions",
+    "description": "45 question cards designed to move conversations past surface level. Prompts storytelling and personal disclosure.",
+    "stages": ["te-rapunga", "te-rawenga"],
+    "muscles": [
+      "relational-intelligence",
+      "recognition-and-reciprocity",
+      "emotional-awareness-and-processing",
+      "mindfulness-and-presence",
+      "comfort-with-mystery-and-uncertainty",
+      "multiple-ways-of-knowing"
+    ],
+    "video": null,
+    "source": null
+  },
+  {
+    "id": "6-thinking-hats",
+    "name": "6 Thinking Hats",
+    "description": "De Bono's parallel thinking method. Group adopts one \"hat\" (mode of thinking) at a time — White (facts), Red (feelings), Black (caution), Yellow (benefits), Green (creativity), Blue (process).",
+    "stages": ["te-kitenga", "te-whainga"],
+    "muscles": [
+      "multiple-ways-of-knowing",
+      "collective-sense-making",
+      "emotional-awareness-and-processing",
+      "pattern-recognition-and-triangulation",
+      "discipline-of-not-acting",
+      "productive-friction"
+    ],
+    "video": null,
+    "source": "Edward de Bono"
+  },
+  {
+    "id": "dvfe",
+    "name": "DVFE",
+    "description": "Decision evaluation lens assessing options against four criteria — Desirability (Do people want it?), Viability (Can it sustain itself?), Feasibility (Can we actually do it?), Ethicality (Should we do it?).",
+    "stages": ["te-whainga"],
+    "muscles": [
+      "multiple-ways-of-knowing",
+      "pattern-recognition-and-triangulation",
+      "collective-sense-making",
+      "purpose-and-orientation",
+      "productive-friction",
+      "restraint-as-embodied-practice"
+    ],
+    "video": null,
+    "source": null
+  },
+  {
+    "id": "reflexiv-model",
+    "name": "Reflexiv Model",
+    "description": "Reflective cycle — Experience → What (stood out) → So What (patterns, implications) → Now What (actions) → Experiment → new Experience. Derived from Kolb and Driscoll.",
+    "stages": ["te-kitenga", "te-whiwhinga", "te-rawenga"],
+    "muscles": [
+      "pattern-recognition-and-triangulation",
+      "cyclic-and-non-linear-thinking",
+      "continuous-adaptation-with-place",
+      "mindfulness-and-presence"
+    ],
+    "video": null,
+    "source": "Derived from Kolb and Driscoll"
+  },
+  {
+    "id": "project-funeral",
+    "name": "Project Funeral / Closing Ritual",
+    "description": "Structured practice for marking endings — acknowledging what's complete, what's being left behind, what was learned.",
+    "stages": ["te-rawenga"],
+    "muscles": [
+      "working-with-endings",
+      "grief-and-release-in-collective-contexts",
+      "compost-and-return",
+      "collective-sense-making"
+    ],
+    "video": null,
+    "source": null
+  },
+  {
+    "id": "pixar-story-spine",
+    "name": "Pixar Story Spine",
+    "description": "Narrative structure template — \"Once upon a time... Every day... One day... Because of that... Until finally... And ever since then...\" Used to construct coherent narratives from messy experience.",
+    "stages": ["te-rawenga"],
+    "muscles": [
+      "multiple-ways-of-knowing",
+      "pattern-recognition-and-triangulation",
+      "purpose-and-orientation",
+      "collective-sense-making"
+    ],
+    "video": null,
+    "source": "Pixar / Kenn Adams"
+  },
+  {
+    "id": "pestle",
+    "name": "PESTLE",
+    "description": "Environmental scanning framework — Political, Economic, Social, Technological, Legal, Environmental factors. Used to read the broader context you're operating in.",
+    "stages": ["whakariterite", "te-kitenga"],
+    "muscles": [
+      "environmental-awareness-and-immersion",
+      "continuous-adaptation-with-place",
+      "pattern-recognition-and-triangulation",
+      "multiple-ways-of-knowing",
+      "collective-sense-making"
+    ],
+    "video": null,
+    "source": null
+  },
+  {
+    "id": "two-loops-model",
+    "name": "Two Loops Model",
+    "description": "Visual framework showing two curves — one system in decline, another emerging. Identifies roles: pioneers of the new, hospice workers for the old, connectors between them.",
+    "stages": ["whakariterite", "te-rawenga"],
+    "muscles": [
+      "compost-and-return",
+      "working-with-endings",
+      "temporal-submission",
+      "cyclic-and-non-linear-thinking",
+      "pattern-recognition-and-triangulation"
+    ],
+    "video": null,
+    "source": "Berkana Institute"
+  }
+]
