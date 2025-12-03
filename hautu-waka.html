@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hautū Waka — Navigating Complexity</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-main: #FAFAFA;
+            --bg-panel: #FFFFFF;
+            --backdrop: rgba(0, 0, 0, 0.55);
+            --text-primary: #333333;
+            --text-secondary: #666666;
+            --teal: #1a7a8c;
+            --teal-dark: #145f6d;
+            --teal-light: rgba(26, 122, 140, 0.1);
+            --shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+            --radius: 8px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Raleway', sans-serif;
+            background: var(--bg-main);
+            color: var(--text-primary);
+            line-height: 1.5;
+            min-height: 100vh;
+        }
+
+        /* Main container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+        }
+
+        /* Diagram container */
+        .diagram-container {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .diagram-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Hotspots */
+        .hotspot {
+            position: absolute;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: box-shadow 0.2s ease, background 0.2s ease;
+            background: transparent;
+        }
+
+        .hotspot:hover {
+            box-shadow: 0 0 0 4px var(--teal-light), 0 0 20px rgba(26, 122, 140, 0.3);
+            background: rgba(26, 122, 140, 0.05);
+        }
+
+        .hotspot:focus {
+            outline: none;
+            box-shadow: 0 0 0 4px var(--teal);
+        }
+
+        /* Hotspot positions - percentages based on diagram layout */
+        .hotspot-whakariterite {
+            left: 6.5%;
+            top: 7.5%;
+            width: 17%;
+            height: 30%;
+        }
+
+        .hotspot-rapunga {
+            left: 5.5%;
+            top: 49.5%;
+            width: 17%;
+            height: 30%;
+        }
+
+        .hotspot-kitenga {
+            left: 28.2%;
+            top: 40.6%;
+            width: 13.5%;
+            height: 24%;
+        }
+
+        .hotspot-whainga {
+            left: 41.5%;
+            top: 16%;
+            width: 16%;
+            height: 28%;
+        }
+
+        .hotspot-whiwhinga {
+            left: 52.1%;
+            top: 42%;
+            width: 16.4%;
+            height: 28.1%;
+        }
+
+        .hotspot-rawenga {
+            left: 77.95%;
+            top: 28.6%;
+            width: 16.5%;
+            height: 28.2%;
+        }
+
+        /* Backdrop */
+        .backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--backdrop);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            z-index: 100;
+        }
+
+        .backdrop.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Panel */
+        .panel {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--bg-panel);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            max-width: 680px;
+            width: 90%;
+            max-height: 85vh;
+            overflow-y: auto;
+            z-index: 101;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.25s ease, visibility 0.25s ease;
+        }
+
+        .panel.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .panel-header {
+            position: sticky;
+            top: 0;
+            background: var(--bg-panel);
+            padding: 20px 24px 12px;
+            border-bottom: 1px solid #eee;
+            z-index: 1;
+        }
+
+        .panel-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s ease;
+        }
+
+        .panel-close:hover {
+            background: #f0f0f0;
+        }
+
+        .panel-close svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--text-secondary);
+        }
+
+        .breadcrumb {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .breadcrumb-link {
+            color: var(--teal);
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .breadcrumb-link:hover {
+            text-decoration: underline;
+        }
+
+        .breadcrumb-separator {
+            margin: 0 8px;
+            color: #ccc;
+        }
+
+        .panel-title {
+            font-size: 26px;
+            font-weight: 600;
+            line-height: 1.2;
+            color: var(--text-primary);
+            padding-right: 40px;
+        }
+
+        .panel-subtitle {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        .panel-dimension {
+            display: inline-block;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--teal);
+            background: var(--teal-light);
+            padding: 4px 10px;
+            border-radius: 4px;
+            margin-top: 8px;
+        }
+
+        .panel-content {
+            padding: 20px 24px 24px;
+        }
+
+        .panel-section {
+            margin-bottom: 24px;
+        }
+
+        .panel-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .panel-section-title {
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+        }
+
+        .panel-text {
+            font-size: 16px;
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .panel-text p {
+            margin-bottom: 12px;
+        }
+
+        .panel-text p:last-child {
+            margin-bottom: 0;
+        }
+
+        .reflection-questions {
+            background: #f8f9fa;
+            padding: 16px;
+            border-radius: var(--radius);
+            border-left: 3px solid var(--teal);
+        }
+
+        .reflection-questions li {
+            margin-bottom: 8px;
+            margin-left: 16px;
+        }
+
+        .reflection-questions li:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Links */
+        .link-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .link-item {
+            display: inline-block;
+            font-size: 14px;
+            color: var(--teal);
+            text-decoration: none;
+            padding: 6px 12px;
+            background: var(--teal-light);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+
+        .link-item:hover {
+            background: var(--teal);
+            color: white;
+        }
+
+        .cross-refs {
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+            margin-top: 24px;
+        }
+
+        .cross-ref-group {
+            margin-bottom: 12px;
+        }
+
+        .cross-ref-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .cross-ref-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+        }
+
+        /* Video placeholder */
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            background: #f0f0f0;
+            border-radius: var(--radius);
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .video-placeholder {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        /* Introduction overlay */
+        .intro-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--backdrop);
+            z-index: 200;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 1;
+            transition: opacity 0.4s ease;
+        }
+
+        .intro-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .intro-panel {
+            background: var(--bg-panel);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            max-width: 720px;
+            width: 90%;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 40px;
+        }
+
+        .intro-hook {
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 24px;
+            line-height: 1.3;
+        }
+
+        .intro-section {
+            margin-bottom: 20px;
+        }
+
+        .intro-section-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--teal);
+            margin-bottom: 8px;
+        }
+
+        .intro-text {
+            font-size: 16px;
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .intro-attribution {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-top: 24px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .intro-button {
+            display: inline-block;
+            margin-top: 28px;
+            padding: 14px 28px;
+            background: var(--teal);
+            color: white;
+            font-family: 'Raleway', sans-serif;
+            font-size: 16px;
+            font-weight: 500;
+            border: none;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .intro-button:hover {
+            background: var(--teal-dark);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .panel {
+                width: 95%;
+                max-height: 90vh;
+            }
+
+            .panel-header {
+                padding: 16px 16px 10px;
+            }
+
+            .panel-content {
+                padding: 16px;
+            }
+
+            .panel-title {
+                font-size: 22px;
+            }
+
+            .intro-panel {
+                padding: 24px;
+            }
+
+            .intro-hook {
+                font-size: 18px;
+            }
+
+            .hotspot {
+                min-width: 44px;
+                min-height: 44px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Introduction Overlay -->
+<div class="intro-overlay" id="introOverlay">
+    <div class="intro-panel">
+        <div class="intro-hook">
+            Hautū Waka is a Māori wayfinding framework for situations where conditions shift faster than plans can keep up.
+        </div>
+        
+        <div class="intro-section">
+            <div class="intro-section-title">What it's for</div>
+            <div class="intro-text">
+                Some situations can be analysed and solved. Others resist that approach — policy design where stakeholders shift positions, organisational change where each adaptation changes the terrain, any environment where what worked last month stops working. These aren't problems to solve. They're conditions to find your way through.
+            </div>
+        </div>
+        
+        <div class="intro-section">
+            <div class="intro-section-title">How it works</div>
+            <div class="intro-text">
+                The diagram shows six stages/states. You can move through them as a linear design process, and that works. But the real power is in treating them as states you move between as conditions require — sometimes progressing, sometimes cycling back, sometimes finding that your destination changes mid-journey. Polynesian navigators didn't use fixed maps because the ocean doesn't hold still. This framework applies that principle to complex contemporary work.
+            </div>
+        </div>
+        
+        <div class="intro-section">
+            <div class="intro-section-title">Using this diagram</div>
+            <div class="intro-text">
+                Click any stage/state to explore it. The arrows show possible movements, not prescribed sequences.
+            </div>
+        </div>
+        
+        <div class="intro-attribution">
+            Based on work by Roimata Taniwha-Pao'o and Ayla Hoeta, with guidance from Matua Rereata Makiha.<br>
+            Developed at The Southern Initiative and Auckland Co-Design Lab.
+        </div>
+        
+        <button class="intro-button" onclick="dismissIntro()">Begin exploring</button>
+    </div>
+</div>
+
+<!-- Main content -->
+<div class="container">
+    <div class="diagram-container">
+        <img src="HautuWakaProcess.png" alt="Hautū Waka Process Diagram">
+        
+        <!-- Hotspots -->
+        <div class="hotspot hotspot-whakariterite" tabindex="0" 
+             onclick="showStage('whakariterite')" 
+             onkeydown="handleKeydown(event, 'whakariterite')"
+             aria-label="Whakariterite - Prepare for the journey"></div>
+        
+        <div class="hotspot hotspot-rapunga" tabindex="0" 
+             onclick="showStage('rapunga')" 
+             onkeydown="handleKeydown(event, 'rapunga')"
+             aria-label="Te Rāpunga - Venture into the unknown"></div>
+        
+        <div class="hotspot hotspot-kitenga" tabindex="0" 
+             onclick="showStage('kitenga')" 
+             onkeydown="handleKeydown(event, 'kitenga')"
+             aria-label="Te Kitenga - Sight tohu"></div>
+        
+        <div class="hotspot hotspot-whainga" tabindex="0" 
+             onclick="showStage('whainga')" 
+             onkeydown="handleKeydown(event, 'whainga')"
+             aria-label="Te Whāinga - Make decisions based on tohu"></div>
+        
+        <div class="hotspot hotspot-whiwhinga" tabindex="0" 
+             onclick="showStage('whiwhinga')" 
+             onkeydown="handleKeydown(event, 'whiwhinga')"
+             aria-label="Te Whiwhinga - Do the do"></div>
+        
+        <div class="hotspot hotspot-rawenga" tabindex="0" 
+             onclick="showStage('rawenga')" 
+             onkeydown="handleKeydown(event, 'rawenga')"
+             aria-label="Te Rāwenga - Celebrate, reflect, acknowledge tohu"></div>
+    </div>
+</div>
+
+<!-- Backdrop -->
+<div class="backdrop" id="backdrop" onclick="closePanel()"></div>
+
+<!-- Panel -->
+<div class="panel" id="panel">
+    <div class="panel-header">
+        <button class="panel-close" onclick="closePanel()" aria-label="Close panel">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 6L6 18M6 6l12 12"/>
+            </svg>
+        </button>
+        <div class="breadcrumb" id="breadcrumb"></div>
+        <h2 class="panel-title" id="panelTitle"></h2>
+        <div class="panel-subtitle" id="panelSubtitle"></div>
+        <div class="panel-dimension" id="panelDimension" style="display: none;"></div>
+    </div>
+    <div class="panel-content" id="panelContent"></div>
+</div>
+
+<script>
+// Data
+const stages = {
+    whakariterite: {
+        id: 'whakariterite',
+        name: 'Whakariterite',
+        subtitle: 'Prepare for the journey',
+        asStage: 'Define the journey\'s purpose. Determine who comes and who stays behind. Gather what you\'ll need — physically, mentally, spiritually. Set up Te Rāwenga (the good place) by deciding what experience you want, not just where you\'re going.',
+        asState: 'A mode of ongoing readiness. You return here when conditions demand reassessment — when the crew needs to change, when purpose has drifted, when you\'ve been at sea long enough to forget why you left.',
+        questions: [
+            'What is the purpose of this journey?',
+            'Who needs to come, and who needs to stay off?',
+            'What will we need — and what must we leave behind?'
+        ],
+        tools: ['tewharetapawha', 'emotionalculturedeck', 'theoryofchange', 'pestle', 'twoloops'],
+        video: null
+    },
+    rapunga: {
+        id: 'rapunga',
+        name: 'Te Rāpunga',
+        subtitle: 'Venture into the unknown',
+        asStage: 'Set off into uncertainty. Name what you\'re afraid of and what excites you. Move from preparation into active searching with your whole being — not just your analytical mind.',
+        asState: 'The experience of being in the unknown. You return here whenever you face unfamiliar territory, whenever the familiar signposts disappear, whenever you need to ask again: what are we afraid of? Sometimes the moana is wild; sometimes it\'s flat and you\'re not moving. Both are Te Rāpunga.',
+        questions: [
+            'What are we excited about?',
+            'What are we afraid of?',
+            'What opportunities emerge from that fear?'
+        ],
+        tools: ['emotionalculturedeck', 'morethanwords', 'deeperquestions', 'tewharetapawha'],
+        video: null
+    },
+    kitenga: {
+        id: 'kitenga',
+        name: 'Te Kitenga',
+        subtitle: 'Sight tohu',
+        asStage: 'Look for signs. Identify where you\'re looking and what you\'re seeing. Triangulate — a single data point means nothing; you need convergent signals from multiple sources.',
+        asState: 'A mode of heightened attention and pattern recognition. You can be here while also being in Te Rāpunga. You\'re not acting yet — you\'re reading conditions, noticing what the environment, the organisation, or the situation is telling you. Stillness to see clearly.',
+        questions: [
+            'Where are we looking for signs?',
+            'What signs are we seeing?',
+            'What patterns are forming across multiple sources?'
+        ],
+        tools: ['sixconditions', 'pestle', 'morethanwords', 'reflexiv', 'sixthinkinghats'],
+        video: null
+    },
+    whainga: {
+        id: 'whainga',
+        name: 'Te Whāinga',
+        subtitle: 'Make decisions based on tohu',
+        asStage: 'Assess the signs you\'ve gathered. Decide: push through, go around, or return? What risks can you afford? What can you not? Commit to a direction based on what you\'re seeing, not a predetermined plan.',
+        asState: 'A decision point you can enter at any time. None of the choices are right or wrong — they\'re responses to conditions. You might cycle through multiple Te Whāinga moments in a single journey as new tohu emerge.',
+        questions: [
+            'What decisions do we need to make, based on the signs?',
+            'What risks can we afford to take? What can we not?',
+            'Do we push through, go around, or return?'
+        ],
+        tools: ['sixthinkinghats', 'dvfe', 'theoryofchange', 'emotionalculturedeck'],
+        video: null
+    },
+    whiwhinga: {
+        id: 'whiwhinga',
+        name: 'Te Whiwhinga',
+        subtitle: 'Do the do',
+        asStage: 'Execute. Grasp what you can take hold of. Assign who does what, by when, with what support. Move from analysis to committed action.',
+        asState: 'The mode of committed engagement. Tūwhitia te hopo, mairangitia te angitū — feel the fear and do it anyway. You\'re grappling with the work, making mistakes, correcting as you go. Action in a dancing landscape, not execution of a fixed plan.',
+        questions: [
+            'Who needs to do what, and by when?',
+            'What help might they need?',
+            'What can we grasp and take hold of right now?'
+        ],
+        tools: ['tewharetapawha', 'reflexiv', 'emotionalculturedeck'],
+        video: null
+    },
+    rawenga: {
+        id: 'rawenga',
+        name: 'Te Rāwenga',
+        subtitle: 'The good place',
+        asStage: 'Arrive. Reflect on the journey. Celebrate what was achieved. Acknowledge the people and tohu who helped. Ask: what can we gift to others to help their future journeys?',
+        asState: 'A mode of assessment and reflection. Is this the good place? You might arrive at your goal and realise it\'s not good enough. You might not reach your goal but find yourself somewhere that is. Te Rāwenga isn\'t about hitting targets — it\'s about recognising when you\'ve arrived somewhere worth stopping.',
+        questions: [
+            'How will we know we\'ve arrived at the good place?',
+            'How will we celebrate, reflect, and acknowledge those who helped?',
+            'What can we gift to others to help their future journeys?'
+        ],
+        tools: ['projectfuneral', 'reflexiv', 'pixarstoryspine', 'twoloops', 'deeperquestions'],
+        video: null
+    }
+};
+
+const tools = {
+    emotionalculturedeck: {
+        id: 'emotionalculturedeck',
+        name: 'Emotional Culture Deck',
+        description: 'Teams use emotion cards to surface how they want to feel at work, how they don\'t want to feel, and what behaviours create those feelings. Makes emotional culture visible and discussable.',
+        muscles: ['emotionalawareness', 'relationalintelligence', 'collectivesensemaking', 'recognition', 'mindfulness'],
+        stages: ['whakariterite', 'rapunga', 'whainga', 'whiwhinga'],
+        video: null
+    },
+    morethanwords: {
+        id: 'morethanwords',
+        name: 'More Than Words (Imagery Cards)',
+        description: 'Visual prompts help people access thoughts, feelings, memories they struggle to articulate verbally. Used in facilitation, counselling, reflection work.',
+        muscles: ['emotionalawareness', 'multiplewaysofknowing', 'mindfulness', 'sensoryperception', 'comfortwithmystery', 'purposeandorientation'],
+        stages: ['rapunga', 'kitenga'],
+        video: null
+    },
+    sixconditions: {
+        id: 'sixconditions',
+        name: '6 Conditions of Systems Change',
+        description: 'FSG framework for analysing systems across six conditions — three explicit (policies, practices, resource flows) and three implicit (relationships, power dynamics, mental models). Used to diagnose where change efforts should focus.',
+        muscles: ['patternrecognition', 'relationalintelligence', 'environmentalawareness', 'multiplewaysofknowing', 'cyclicthinking', 'collectivesensemaking'],
+        stages: ['kitenga'],
+        video: null
+    },
+    tewharetapawha: {
+        id: 'tewharetapawha',
+        name: 'Te Whare Tapa Whā',
+        description: 'Framework for assessing holistic wellbeing — checking in across Tinana, Wairua, Whānau, Hinengaro, and Whenua. Can be individual or collective reflection.',
+        muscles: ['bodyawareness', 'emotionalawareness', 'relationalintelligence', 'purposeandorientation', 'rootedness', 'multiplewaysofknowing', 'mindfulness'],
+        stages: ['whakariterite', 'rapunga', 'whiwhinga'],
+        video: null
+    },
+    theoryofchange: {
+        id: 'theoryofchange',
+        name: 'Theory of Change',
+        description: 'Maps causal pathways from activities to outcomes (If, By, Then, & Then, & Eventually). Forces articulation of assumptions about how change happens.',
+        muscles: ['patternrecognition', 'purposeandorientation', 'collectivesensemaking', 'cyclicthinking', 'comfortwithmystery'],
+        stages: ['whakariterite', 'whainga'],
+        video: null
+    },
+    deeperquestions: {
+        id: 'deeperquestions',
+        name: 'Deeper Questions',
+        description: '45 question cards designed to move conversations past surface level. Prompts storytelling and personal disclosure.',
+        muscles: ['relationalintelligence', 'recognition', 'emotionalawareness', 'mindfulness', 'comfortwithmystery', 'multiplewaysofknowing'],
+        stages: ['rapunga', 'rawenga'],
+        video: null
+    },
+    sixthinkinghats: {
+        id: 'sixthinkinghats',
+        name: '6 Thinking Hats',
+        description: 'De Bono\'s parallel thinking method. Group adopts one "hat" (mode of thinking) at a time — White (facts), Red (feelings), Black (caution), Yellow (benefits), Green (creativity), Blue (process).',
+        muscles: ['multiplewaysofknowing', 'collectivesensemaking', 'emotionalawareness', 'patternrecognition', 'disciplineofnotacting', 'productivefriction'],
+        stages: ['kitenga', 'whainga'],
+        video: null
+    },
+    dvfe: {
+        id: 'dvfe',
+        name: 'DVFE',
+        description: 'Decision evaluation lens assessing options against four criteria — Desirability (Do people want it?), Viability (Can it sustain itself?), Feasibility (Can we actually do it?), Ethicality (Should we do it?).',
+        muscles: ['multiplewaysofknowing', 'patternrecognition', 'collectivesensemaking', 'purposeandorientation', 'productivefriction', 'restraint'],
+        stages: ['whainga'],
+        video: null
+    },
+    reflexiv: {
+        id: 'reflexiv',
+        name: 'Reflexiv Model',
+        description: 'Reflective cycle — Experience → What (stood out) → So What (patterns, implications) → Now What (actions) → Experiment → new Experience. Derived from Kolb and Driscoll.',
+        muscles: ['patternrecognition', 'cyclicthinking', 'continuousadaptation', 'mindfulness'],
+        stages: ['kitenga', 'whiwhinga', 'rawenga'],
+        video: null
+    },
+    projectfuneral: {
+        id: 'projectfuneral',
+        name: 'Project Funeral / Closing Ritual',
+        description: 'Structured practice for marking endings — acknowledging what\'s complete, what\'s being left behind, what was learned.',
+        muscles: ['workingwithendings', 'griefandrelease', 'compostandreturn', 'collectivesensemaking'],
+        stages: ['rawenga'],
+        video: null
+    },
+    pixarstoryspine: {
+        id: 'pixarstoryspine',
+        name: 'Pixar Story Spine',
+        description: 'Narrative structure template — "Once upon a time... Every day... One day... Because of that... Until finally... And ever since then..." Used to construct coherent narratives from messy experience.',
+        muscles: ['multiplewaysofknowing', 'patternrecognition', 'purposeandorientation', 'collectivesensemaking'],
+        stages: ['rawenga'],
+        video: null
+    },
+    pestle: {
+        id: 'pestle',
+        name: 'PESTLE',
+        description: 'Environmental scanning framework — Political, Economic, Social, Technological, Legal, Environmental factors. Used to read the broader context you\'re operating in.',
+        muscles: ['environmentalawareness', 'continuousadaptation', 'patternrecognition', 'multiplewaysofknowing', 'collectivesensemaking'],
+        stages: ['whakariterite', 'kitenga'],
+        video: null
+    },
+    twoloops: {
+        id: 'twoloops',
+        name: 'Two Loops Model',
+        description: 'Visual framework showing two curves — one system in decline, another emerging. Identifies roles: pioneers of the new, hospice workers for the old, connectors between them.',
+        muscles: ['compostandreturn', 'workingwithendings', 'temporalsubmission', 'cyclicthinking', 'patternrecognition'],
+        stages: ['whakariterite', 'rawenga'],
+        video: null
+    }
+};
+
+const muscles = {
+    // Whenua
+    rootedness: {
+        id: 'rootedness',
+        name: 'Rootedness and Belonging',
+        dimension: 'Whenua (Foundation)',
+        description: 'Connection to place shapes identity. Knowing where you come from helps you navigate where you\'re going.',
+        tools: ['tewharetapawha']
+    },
+    relationshipwithenvironment: {
+        id: 'relationshipwithenvironment',
+        name: 'Relationship with Environment',
+        dimension: 'Whenua (Foundation)',
+        description: 'Environment isn\'t backdrop — it\'s relation. Reciprocal relationship with places and spaces you inhabit.',
+        tools: []
+    },
+    environmentalawareness: {
+        id: 'environmentalawareness',
+        name: 'Environmental Awareness and Immersion',
+        dimension: 'Whenua (Foundation)',
+        description: 'Being involved in the world rather than abstracting from it. Environment communicates constantly.',
+        tools: ['sixconditions', 'pestle']
+    },
+    continuousadaptation: {
+        id: 'continuousadaptation',
+        name: 'Continuous Adaptation with Place',
+        dimension: 'Whenua (Foundation)',
+        description: 'Place changes. You change. Staying connected means refreshing understanding continuously.',
+        tools: ['reflexiv', 'pestle']
+    },
+    temporalsubmission: {
+        id: 'temporalsubmission',
+        name: 'Temporal Submission',
+        dimension: 'Whenua (Foundation)',
+        description: 'Place has its own rhythms. Growing happens according to the logic of context, not urgency of the grower.',
+        tools: ['twoloops']
+    },
+    compostandreturn: {
+        id: 'compostandreturn',
+        name: 'Compost and Return',
+        dimension: 'Whenua (Foundation)',
+        description: 'What dies enables growth to continue. Old patterns, identities, certainties — their dissolution creates conditions for what comes next.',
+        tools: ['projectfuneral', 'twoloops']
+    },
+    // Tinana
+    bodyawareness: {
+        id: 'bodyawareness',
+        name: 'Body Awareness and Somatic Intelligence',
+        dimension: 'Taha Tinana (Physical)',
+        description: 'Your body registers information before your conscious mind does. Tension, ease, gut responses are data.',
+        tools: ['tewharetapawha']
+    },
+    sensoryperception: {
+        id: 'sensoryperception',
+        name: 'Sensory Perception',
+        dimension: 'Taha Tinana (Physical)',
+        description: 'Intelligence comes through all senses, not just sight.',
+        tools: ['morethanwords']
+    },
+    limitsandrest: {
+        id: 'limitsandrest',
+        name: 'Limits and Rest',
+        dimension: 'Taha Tinana (Physical)',
+        description: 'Bodies have limits. Exhaustion isn\'t an obstacle to overcome but information about what\'s sustainable.',
+        tools: []
+    },
+    restraint: {
+        id: 'restraint',
+        name: 'Restraint as Embodied Practice',
+        dimension: 'Taha Tinana (Physical)',
+        description: 'Not-doing takes practice. The body learns to hold back, pause before acting.',
+        tools: ['dvfe']
+    },
+    // Wairua
+    ancestralknowledge: {
+        id: 'ancestralknowledge',
+        name: 'Connection to Ancestral Knowledge',
+        dimension: 'Taha Wairua (Spiritual)',
+        description: 'Tūpuna had been doing this for ages. Traditional practices contain wisdom tested over generations.',
+        tools: []
+    },
+    purposeandorientation: {
+        id: 'purposeandorientation',
+        name: 'Purpose and Orientation',
+        dimension: 'Taha Wairua (Spiritual)',
+        description: 'Work connects to something larger than immediate tasks. Purpose provides orientation when conditions shift.',
+        tools: ['morethanwords', 'tewharetapawha', 'theoryofchange', 'dvfe', 'pixarstoryspine']
+    },
+    comfortwithmystery: {
+        id: 'comfortwithmystery',
+        name: 'Comfort with Mystery and Uncertainty',
+        dimension: 'Taha Wairua (Spiritual)',
+        description: 'Not everything can be known in advance. Emergence is real. Certainty is often illusion.',
+        tools: ['morethanwords', 'theoryofchange', 'deeperquestions']
+    },
+    workingwithendings: {
+        id: 'workingwithendings',
+        name: 'Working with Endings',
+        dimension: 'Taha Wairua (Spiritual)',
+        description: 'Everything ends. Spiritual maturity includes orienting toward mortality without rancour.',
+        tools: ['projectfuneral', 'twoloops']
+    },
+    acceptanceofuncontrollable: {
+        id: 'acceptanceofuncontrollable',
+        name: 'Acceptance of the Uncontrollable',
+        dimension: 'Taha Wairua (Spiritual)',
+        description: 'Some things can\'t be changed by effort. Finding equanimity with what must be accepted.',
+        tools: []
+    },
+    // Whānau
+    relationalintelligence: {
+        id: 'relationalintelligence',
+        name: 'Relational Intelligence',
+        dimension: 'Taha Whānau (Social)',
+        description: 'Relationships aren\'t just context for work — they are the work. Quality of relationships determines what becomes possible.',
+        tools: ['emotionalculturedeck', 'sixconditions', 'tewharetapawha', 'deeperquestions']
+    },
+    collectivesensemaking: {
+        id: 'collectivesensemaking',
+        name: 'Collective Sense-Making',
+        dimension: 'Taha Whānau (Social)',
+        description: 'Understanding emerges through collective process, not individual genius.',
+        tools: ['emotionalculturedeck', 'sixconditions', 'theoryofchange', 'sixthinkinghats', 'dvfe', 'projectfuneral', 'pixarstoryspine', 'pestle']
+    },
+    recognition: {
+        id: 'recognition',
+        name: 'Recognition and Reciprocity',
+        dimension: 'Taha Whānau (Social)',
+        description: 'Seeing and acknowledging others\' mana and potential. Relationships characterised by mutual respect.',
+        tools: ['emotionalculturedeck', 'deeperquestions']
+    },
+    productivefriction: {
+        id: 'productivefriction',
+        name: 'Productive Friction',
+        dimension: 'Taha Whānau (Social)',
+        description: 'Honest collective work involves disagreement, tension, struggle. Conflict isn\'t failure of relationship.',
+        tools: ['sixthinkinghats', 'dvfe']
+    },
+    griefandrelease: {
+        id: 'griefandrelease',
+        name: 'Grief and Release in Collective Contexts',
+        dimension: 'Taha Whānau (Social)',
+        description: 'Collectives lose members. Collective grief — acknowledging loss together — is how groups remain capable of forming new attachments.',
+        tools: ['projectfuneral']
+    },
+    // Hinengaro
+    mindfulness: {
+        id: 'mindfulness',
+        name: 'Mindfulness and Presence',
+        dimension: 'Taha Hinengaro (Mental/Emotional)',
+        description: 'Being fully present to what\'s happening now, rather than ruminating on past or worrying about future.',
+        tools: ['emotionalculturedeck', 'morethanwords', 'tewharetapawha', 'deeperquestions', 'reflexiv']
+    },
+    emotionalawareness: {
+        id: 'emotionalawareness',
+        name: 'Emotional Awareness and Processing',
+        dimension: 'Taha Hinengaro (Mental/Emotional)',
+        description: 'Emotions are information. Fear, excitement, resistance — all signal something worth attending to. Includes emotional granularity.',
+        tools: ['emotionalculturedeck', 'morethanwords', 'tewharetapawha', 'deeperquestions', 'sixthinkinghats']
+    },
+    patternrecognition: {
+        id: 'patternrecognition',
+        name: 'Pattern Recognition and Triangulation',
+        dimension: 'Taha Hinengaro (Mental/Emotional)',
+        description: 'Seeing connections between seemingly separate things. Never trusting single data points.',
+        tools: ['sixconditions', 'theoryofchange', 'sixthinkinghats', 'dvfe', 'reflexiv', 'pixarstoryspine', 'pestle', 'twoloops']
+    },
+    multiplewaysofknowing: {
+        id: 'multiplewaysofknowing',
+        name: 'Multiple Ways of Knowing',
+        dimension: 'Taha Hinengaro (Mental/Emotional)',
+        description: 'Rational analysis is one tool among many. Intuition, embodied knowing, emotional intelligence — all valid.',
+        tools: ['morethanwords', 'sixconditions', 'tewharetapawha', 'deeperquestions', 'sixthinkinghats', 'dvfe', 'pixarstoryspine', 'pestle']
+    },
+    cyclicthinking: {
+        id: 'cyclicthinking',
+        name: 'Cyclic and Non-Linear Thinking',
+        dimension: 'Taha Hinengaro (Mental/Emotional)',
+        description: 'Process isn\'t always forward progression. Cycling back is part of navigation.',
+        tools: ['sixconditions', 'theoryofchange', 'reflexiv', 'twoloops']
+    },
+    toleranceforfrustration: {
+        id: 'toleranceforfrustration',
+        name: 'Tolerance for Frustration',
+        dimension: 'Taha Hinengaro (Mental/Emotional)',
+        description: 'Innovation is struggle. Frustration isn\'t sign of failure — it\'s the texture of the work.',
+        tools: []
+    },
+    disciplineofnotacting: {
+        id: 'disciplineofnotacting',
+        name: 'Discipline of Not-Acting',
+        dimension: 'Taha Hinengaro (Mental/Emotional)',
+        description: 'Sitting with incompletion takes mental discipline. Resisting premature closure.',
+        tools: ['sixthinkinghats']
+    }
+};
+
+// Stage display names for breadcrumbs
+const stageNames = {
+    whakariterite: 'Whakariterite',
+    rapunga: 'Te Rāpunga',
+    kitenga: 'Te Kitenga',
+    whainga: 'Te Whāinga',
+    whiwhinga: 'Te Whiwhinga',
+    rawenga: 'Te Rāwenga'
+};
+
+// Navigation state
+let navigationStack = [];
+
+// Functions
+function dismissIntro() {
+    document.getElementById('introOverlay').classList.add('hidden');
+}
+
+function showStage(stageId) {
+    const stage = stages[stageId];
+    if (!stage) return;
+    
+    navigationStack = [{ type: 'stage', id: stageId }];
+    renderStagePanel(stage);
+    openPanel();
+}
+
+function showTool(toolId, fromStageId = null) {
+    const tool = tools[toolId];
+    if (!tool) return;
+    
+    if (fromStageId) {
+        navigationStack = [
+            { type: 'stage', id: fromStageId },
+            { type: 'tool', id: toolId }
+        ];
+    } else {
+        navigationStack = [{ type: 'tool', id: toolId }];
+    }
+    
+    renderToolPanel(tool);
+    openPanel();
+}
+
+function showMuscle(muscleId) {
+    const muscle = muscles[muscleId];
+    if (!muscle) return;
+    
+    if (navigationStack.length > 0) {
+        navigationStack.push({ type: 'muscle', id: muscleId });
+    } else {
+        navigationStack = [{ type: 'muscle', id: muscleId }];
+    }
+    
+    renderMusclePanel(muscle);
+    openPanel();
+}
+
+function navigateTo(index) {
+    const item = navigationStack[index];
+    navigationStack = navigationStack.slice(0, index + 1);
+    
+    if (item.type === 'stage') {
+        renderStagePanel(stages[item.id]);
+    } else if (item.type === 'tool') {
+        renderToolPanel(tools[item.id]);
+    } else if (item.type === 'muscle') {
+        renderMusclePanel(muscles[item.id]);
+    }
+}
+
+function renderBreadcrumb() {
+    const breadcrumb = document.getElementById('breadcrumb');
+    if (navigationStack.length <= 1) {
+        breadcrumb.innerHTML = '';
+        return;
+    }
+    
+    let html = '';
+    navigationStack.forEach((item, index) => {
+        let name = '';
+        if (item.type === 'stage') {
+            name = stageNames[item.id];
+        } else if (item.type === 'tool') {
+            name = tools[item.id].name;
+        } else if (item.type === 'muscle') {
+            name = muscles[item.id].name;
+        }
+        
+        if (index < navigationStack.length - 1) {
+            html += `<span class="breadcrumb-link" onclick="navigateTo(${index})">${name}</span>`;
+            html += '<span class="breadcrumb-separator">›</span>';
+        }
+    });
+    
+    breadcrumb.innerHTML = html;
+}
+
+function renderStagePanel(stage) {
+    renderBreadcrumb();
+    
+    document.getElementById('panelTitle').textContent = stage.name;
+    document.getElementById('panelSubtitle').textContent = stage.subtitle;
+    document.getElementById('panelDimension').style.display = 'none';
+    
+    let html = '';
+    
+    // Video placeholder
+    if (stage.video) {
+        html += `<div class="video-container"><iframe src="${stage.video}" allowfullscreen></iframe></div>`;
+    }
+    
+    // As a stage
+    html += `
+        <div class="panel-section">
+            <div class="panel-section-title">As a stage</div>
+            <div class="panel-text"><p>${stage.asStage}</p></div>
+        </div>
+    `;
+    
+    // As a state
+    html += `
+        <div class="panel-section">
+            <div class="panel-section-title">As a state</div>
+            <div class="panel-text"><p>${stage.asState}</p></div>
+        </div>
+    `;
+    
+    // Reflection questions
+    html += `
+        <div class="panel-section">
+            <div class="panel-section-title">Reflection questions</div>
+            <div class="reflection-questions">
+                <ul>
+                    ${stage.questions.map(q => `<li>${q}</li>`).join('')}
+                </ul>
+            </div>
+        </div>
+    `;
+    
+    // Tools
+    html += `
+        <div class="panel-section">
+            <div class="panel-section-title">Tools</div>
+            <div class="link-list">
+                ${stage.tools.map(toolId => {
+                    const tool = tools[toolId];
+                    return `<span class="link-item" onclick="showTool('${toolId}', '${stage.id}')">${tool.name}</span>`;
+                }).join('')}
+            </div>
+        </div>
+    `;
+    
+    document.getElementById('panelContent').innerHTML = html;
+}
+
+function renderToolPanel(tool) {
+    renderBreadcrumb();
+    
+    document.getElementById('panelTitle').textContent = tool.name;
+    document.getElementById('panelSubtitle').textContent = '';
+    document.getElementById('panelDimension').style.display = 'none';
+    
+    let html = '';
+    
+    // Video placeholder
+    if (tool.video) {
+        html += `<div class="video-container"><iframe src="${tool.video}" allowfullscreen></iframe></div>`;
+    }
+    
+    // Description
+    html += `
+        <div class="panel-section">
+            <div class="panel-text"><p>${tool.description}</p></div>
+        </div>
+    `;
+    
+    // Develops muscles
+    html += `
+        <div class="panel-section">
+            <div class="panel-section-title">Develops</div>
+            <div class="link-list">
+                ${tool.muscles.map(muscleId => {
+                    const muscle = muscles[muscleId];
+                    return `<span class="link-item" onclick="showMuscle('${muscleId}')">${muscle.name}</span>`;
+                }).join('')}
+            </div>
+        </div>
+    `;
+    
+    // Cross-references
+    if (tool.stages.length > 1) {
+        html += `
+            <div class="cross-refs">
+                <div class="cross-ref-group">
+                    <div class="cross-ref-label">Also used in:</div>
+                    <div class="link-list">
+                        ${tool.stages.map(stageId => {
+                            return `<span class="link-item" onclick="showStage('${stageId}')">${stageNames[stageId]}</span>`;
+                        }).join('')}
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+    
+    document.getElementById('panelContent').innerHTML = html;
+}
+
+function renderMusclePanel(muscle) {
+    renderBreadcrumb();
+    
+    document.getElementById('panelTitle').textContent = muscle.name;
+    document.getElementById('panelSubtitle').textContent = '';
+    
+    const dimensionEl = document.getElementById('panelDimension');
+    dimensionEl.textContent = muscle.dimension;
+    dimensionEl.style.display = 'inline-block';
+    
+    let html = '';
+    
+    // Description
+    html += `
+        <div class="panel-section">
+            <div class="panel-text"><p>${muscle.description}</p></div>
+        </div>
+    `;
+    
+    // Developed by tools
+    if (muscle.tools.length > 0) {
+        html += `
+            <div class="cross-refs">
+                <div class="cross-ref-group">
+                    <div class="cross-ref-label">Developed by:</div>
+                    <div class="link-list">
+                        ${muscle.tools.map(toolId => {
+                            const tool = tools[toolId];
+                            return `<span class="link-item" onclick="showTool('${toolId}')">${tool.name}</span>`;
+                        }).join('')}
+                    </div>
+                </div>
+            </div>
+        `;
+    } else {
+        html += `
+            <div class="cross-refs">
+                <div class="panel-text" style="font-style: italic; color: var(--text-secondary);">
+                    This capability may develop through practice rather than specific tools.
+                </div>
+            </div>
+        `;
+    }
+    
+    document.getElementById('panelContent').innerHTML = html;
+}
+
+function openPanel() {
+    document.getElementById('backdrop').classList.add('active');
+    document.getElementById('panel').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closePanel() {
+    document.getElementById('backdrop').classList.remove('active');
+    document.getElementById('panel').classList.remove('active');
+    document.body.style.overflow = '';
+    navigationStack = [];
+}
+
+function handleKeydown(event, stageId) {
+    if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        showStage(stageId);
+    }
+}
+
+// Close on escape
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+        if (!document.getElementById('introOverlay').classList.contains('hidden')) {
+            dismissIntro();
+        } else {
+            closePanel();
+        }
+    }
+});
+</script>
+
+</body>
+</html>
