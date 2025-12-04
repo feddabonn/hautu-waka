@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hautū Waka — Navigating Complexity</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ========== BASE STYLES ========== */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Raleway', sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #333333;
+            background: #FAFAFA;
+        }
+        
+        /* ========== LAYOUT ========== */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .container-wide {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* ========== TYPOGRAPHY ========== */
+        h1 {
+            font-size: 36px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 8px;
+        }
+        
+        h2 {
+            font-size: 24px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 16px;
+        }
+        
+        h3 {
+            font-size: 20px;
+            font-weight: 600;
+            line-height: 1.2;
+            margin-bottom: 12px;
+        }
+        
+        h4 {
+            font-size: 18px;
+            font-weight: 600;
+            line-height: 1.2;
+            margin-bottom: 8px;
+        }
+        
+        p {
+            margin-bottom: 16px;
+        }
+        
+        a {
+            color: #1A7F8E;
+            text-decoration: none;
+        }
+        
+        a:hover {
+            color: #156A77;
+            text-decoration: underline;
+        }
+        
+        /* ========== HEADER ========== */
+        .site-header {
+            background: white;
+            padding: 20px 0;
+            border-bottom: 1px solid #E0E0E0;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        
+        .site-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #333;
+            margin: 0;
+        }
+        
+        .site-title span {
+            font-weight: 400;
+            color: #666;
+            font-size: 18px;
+        }
+        
+        .header-link {
+            font-size: 14px;
+            color: #1A7F8E;
+        }
+        
+        /* ========== DIAGRAM SECTION ========== */
+        .diagram-section {
+            background: white;
+            padding: 24px 0;
+            text-align: center;
+        }
+        
+        .diagram-wrapper {
+            position: relative;
+            display: inline-block;
+            max-width: 100%;
+        }
+        
+        .diagram-wrapper img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .diagram-instruction {
+            margin-bottom: 16px;
+            font-size: 14px;
+            color: #666666;
+        }
+        
+        /* Hotspots */
+        .hotspot {
+            position: absolute;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: box-shadow 0.2s ease;
+        }
+        
+        .hotspot:hover {
+            box-shadow: 0 0 0 4px rgba(26, 127, 142, 0.3);
+        }
+        
+        /* ========== STAGE OVERLAY ========== */
+        .overlay-backdrop {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+        
+        .overlay-backdrop.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .stage-overlay {
+            background: white;
+            max-width: 550px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+            padding: 32px;
+            position: relative;
+        }
+        
+        .overlay-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666666;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .overlay-close:hover {
+            color: #333333;
+        }
+        
+        .stage-name {
+            margin-bottom: 24px;
+        }
+        
+        .stage-name h3 {
+            font-size: 24px;
+            margin-bottom: 4px;
+        }
+        
+        .stage-name .english {
+            font-size: 16px;
+            color: #666666;
+            font-weight: 400;
+        }
+        
+        .stage-content h4 {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1A7F8E;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 20px;
+            margin-bottom: 8px;
+        }
+        
+        .stage-content p {
+            margin-bottom: 12px;
+        }
+        
+        .reflection-questions {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .reflection-questions li {
+            padding-left: 20px;
+            position: relative;
+            margin-bottom: 8px;
+        }
+        
+        .reflection-questions li::before {
+            content: "—";
+            position: absolute;
+            left: 0;
+            color: #1A7F8E;
+        }
+        
+        .stage-tools {
+            margin-top: 24px;
+            padding-top: 16px;
+            border-top: 1px solid #E0E0E0;
+        }
+        
+        .stage-tools-label {
+            font-size: 14px;
+            color: #666666;
+            margin-bottom: 8px;
+        }
+        
+        .tool-tag {
+            display: inline-block;
+            background: #E8F4F6;
+            color: #1A7F8E;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 14px;
+            margin-right: 8px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+        
+        .tool-tag:hover {
+            background: #D0EAEE;
+            text-decoration: none;
+        }
+        
+        /* ========== TABS ========== */
+        .tabs-section {
+            background: #F5F5F5;
+            min-height: 400px;
+        }
+        
+        .tab-bar {
+            background: white;
+            border-bottom: 1px solid #E0E0E0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .tab-bar-inner {
+            display: flex;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .tab-button {
+            flex: 1;
+            padding: 16px 24px;
+            background: none;
+            border: none;
+            font-family: 'Raleway', sans-serif;
+            font-size: 16px;
+            font-weight: 500;
+            color: #666666;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s ease;
+        }
+        
+        .tab-button:hover {
+            color: #1A7F8E;
+            background: #F9F9F9;
+        }
+        
+        .tab-button.active {
+            color: #1A7F8E;
+            border-bottom-color: #1A7F8E;
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 32px 0;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .tab-intro {
+            font-size: 15px;
+            color: #666666;
+            margin-bottom: 24px;
+        }
+        
+        /* ========== TOOLS TAB ========== */
+        .tool-entry {
+            background: white;
+            padding: 24px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+        
+        .tool-entry h3 {
+            color: #333333;
+            margin-bottom: 8px;
+        }
+        
+        .tool-entry .description {
+            margin-bottom: 16px;
+        }
+        
+        .tool-entry .meta {
+            font-size: 14px;
+        }
+        
+        .tool-entry .meta-label {
+            color: #666666;
+            margin-right: 8px;
+        }
+        
+        .tool-entry .stages {
+            margin-bottom: 8px;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-right: 4px;
+        }
+        
+        .badge-stage {
+            background: #F0F0F0;
+            color: #666666;
+        }
+        
+        .muscle-link {
+            display: inline-block;
+            margin-right: 8px;
+            margin-bottom: 4px;
+        }
+        
+        /* ========== MUSCLES TAB ========== */
+        .dimension {
+            margin-bottom: 32px;
+        }
+        
+        .dimension-header {
+            background: white;
+            padding: 20px 24px;
+            border-radius: 8px 8px 0 0;
+            border-bottom: 2px solid #1A7F8E;
+        }
+        
+        .dimension-header h3 {
+            color: #1A7F8E;
+            margin-bottom: 4px;
+        }
+        
+        .dimension-english {
+            font-weight: 400;
+            color: #666666;
+        }
+        
+        .dimension-description {
+            font-size: 14px;
+            color: #666666;
+            margin: 0;
+        }
+        
+        .muscles-list {
+            background: white;
+            border-radius: 0 0 8px 8px;
+        }
+        
+        .muscle-entry {
+            padding: 20px 24px;
+            border-bottom: 1px solid #E0E0E0;
+        }
+        
+        .muscle-entry:last-child {
+            border-bottom: none;
+        }
+        
+        .muscle-entry h4 {
+            color: #333333;
+            margin-bottom: 4px;
+        }
+        
+        .muscle-entry .description {
+            margin-bottom: 12px;
+            font-size: 15px;
+        }
+        
+        .muscle-entry .meta {
+            font-size: 14px;
+        }
+        
+        .muscle-entry .meta-label {
+            color: #666666;
+        }
+        
+        .tool-link {
+            display: inline-block;
+            margin-right: 8px;
+        }
+        
+        .no-tools {
+            color: #999999;
+            font-style: italic;
+        }
+        
+        /* ========== SOURCES TAB ========== */
+        .source-category {
+            background: white;
+            padding: 24px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+        }
+        
+        .source-category h3 {
+            font-size: 18px;
+            margin-bottom: 4px;
+        }
+        
+        .category-description {
+            font-size: 14px;
+            color: #666666;
+            margin-bottom: 16px;
+        }
+        
+        .source-category ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .source-category li {
+            padding: 10px 0;
+            border-bottom: 1px solid #E0E0E0;
+        }
+        
+        .source-category li:last-child {
+            border-bottom: none;
+        }
+        
+        /* ========== VIDEO EMBEDS ========== */
+        .video-embed {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            margin: 16px 0;
+        }
+        
+        .video-embed iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        /* ========== FOOTER ========== */
+        .site-footer {
+            background: white;
+            border-top: 1px solid #E0E0E0;
+            padding: 24px 0;
+            text-align: center;
+        }
+        
+        .attribution {
+            font-size: 14px;
+            color: #666666;
+        }
+        
+        .attribution p {
+            margin-bottom: 4px;
+        }
+        
+        /* ========== HIGHLIGHT ========== */
+        .highlight-target {
+            animation: highlightFade 1.5s ease;
+        }
+        
+        @keyframes highlightFade {
+            0% { box-shadow: 0 0 0 4px #1A7F8E; }
+            100% { box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+        }
+        
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 28px;
+            }
+            
+            .site-title span {
+                display: block;
+                font-size: 14px;
+            }
+            
+            .tab-button {
+                padding: 12px 8px;
+                font-size: 14px;
+            }
+            
+            .stage-overlay {
+                padding: 24px;
+                border-radius: 8px 8px 0 0;
+                max-height: 80vh;
+            }
+            
+            .overlay-backdrop.active {
+                align-items: flex-end;
+            }
+            
+            .tool-tag {
+                display: block;
+                margin-right: 0;
+            }
+            
+            .tool-entry,
+            .source-category,
+            .dimension-header,
+            .muscle-entry {
+                padding: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="site-header">
+        <div class="container-wide">
+            <div class="header-content">
+                <h1 class="site-title">Hautū Waka <span>Navigating Complexity</span></h1>
+                <a href="#" class="header-link" id="about-link">About this framework</a>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Diagram Section -->
+    <section class="diagram-section">
+        <div class="container-wide">
+            <p class="diagram-instruction">Click any stage to explore</p>
+            <div class="diagram-wrapper" id="diagram-wrapper">
+                <img src="HautuWakaProcess.png" alt="Hautū Waka Process Diagram" id="diagram-image">
+            </div>
+        </div>
+    </section>
+    
+    <!-- Stage Overlay -->
+    <div class="overlay-backdrop" id="overlay-backdrop">
+        <div class="stage-overlay" id="stage-overlay">
+            <button class="overlay-close" id="overlay-close">×</button>
+            <div class="stage-name">
+                <h3 id="overlay-name-maori"></h3>
+                <span class="english" id="overlay-name-english"></span>
+            </div>
+            <div class="stage-content">
+                <h4>As a stage</h4>
+                <p id="overlay-as-stage"></p>
+                <h4>As a state</h4>
+                <p id="overlay-as-state"></p>
+                <h4>Reflection questions</h4>
+                <ul class="reflection-questions" id="overlay-questions"></ul>
+            </div>
+            <div class="stage-tools">
+                <p class="stage-tools-label">Tools for this stage:</p>
+                <div id="overlay-tools"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- About Overlay -->
+    <div class="overlay-backdrop" id="about-backdrop">
+        <div class="stage-overlay" id="about-overlay">
+            <button class="overlay-close" id="about-close">×</button>
+            {{INTRO_CONTENT}}
+        </div>
+    </div>
+    
+    <!-- Tabs Section -->
+    <section class="tabs-section">
+        <div class="tab-bar">
+            <div class="tab-bar-inner">
+                <button class="tab-button active" data-tab="tools">Tools</button>
+                <button class="tab-button" data-tab="muscles">Muscles</button>
+                <button class="tab-button" data-tab="sources">Sources</button>
+            </div>
+        </div>
+        
+        <div class="tab-content active" id="tab-tools">
+            <div class="container">
+                {{TOOLS_CONTENT}}
+            </div>
+        </div>
+        
+        <div class="tab-content" id="tab-muscles">
+            <div class="container">
+                {{MUSCLES_CONTENT}}
+            </div>
+        </div>
+        
+        <div class="tab-content" id="tab-sources">
+            <div class="container">
+                {{SOURCES_CONTENT}}
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="attribution">
+                <p>Based on work by Roimata Taniwha-Pao'o and Ayla Hoeta, with guidance from Matua Rereata Makiha.</p>
+                <p>Developed at The Southern Initiative and Auckland Co-Design Lab.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Stage data
+        const stages = {{STAGE_DATA}};
+        
+        // DOM elements
+        const diagramWrapper = document.getElementById('diagram-wrapper');
+        const diagramImage = document.getElementById('diagram-image');
+        const overlayBackdrop = document.getElementById('overlay-backdrop');
+        const overlayClose = document.getElementById('overlay-close');
+        const aboutBackdrop = document.getElementById('about-backdrop');
+        const aboutClose = document.getElementById('about-close');
+        const aboutLink = document.getElementById('about-link');
+        
+        // Create hotspots when image loads
+        diagramImage.addEventListener('load', createHotspots);
+        if (diagramImage.complete) createHotspots();
+        
+        function createHotspots() {
+            document.querySelectorAll('.hotspot').forEach(h => h.remove());
+            
+            stages.forEach(stage => {
+                const hotspot = document.createElement('div');
+                hotspot.className = 'hotspot';
+                hotspot.dataset.stageId = stage.id;
+                hotspot.style.left = stage.hotspot.x_percent + '%';
+                hotspot.style.top = stage.hotspot.y_percent + '%';
+                hotspot.style.width = stage.hotspot.width_percent + '%';
+                hotspot.style.height = stage.hotspot.height_percent + '%';
+                hotspot.addEventListener('click', () => openStageOverlay(stage));
+                diagramWrapper.appendChild(hotspot);
+            });
+        }
+        
+        function openStageOverlay(stage) {
+            document.getElementById('overlay-name-maori').textContent = stage.name_maori;
+            document.getElementById('overlay-name-english').textContent = stage.name_english;
+            document.getElementById('overlay-as-stage').textContent = stage.as_stage;
+            document.getElementById('overlay-as-state').textContent = stage.as_state;
+            
+            const questionsList = document.getElementById('overlay-questions');
+            questionsList.innerHTML = '';
+            stage.reflection_questions.forEach(q => {
+                const li = document.createElement('li');
+                li.textContent = q;
+                questionsList.appendChild(li);
+            });
+            
+            const toolsContainer = document.getElementById('overlay-tools');
+            toolsContainer.innerHTML = '';
+            stage.tools.forEach(tool => {
+                const tag = document.createElement('a');
+                tag.className = 'tool-tag';
+                tag.textContent = tool.name;
+                tag.href = '#';
+                tag.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    closeOverlay();
+                    switchToTab('tools');
+                    setTimeout(() => {
+                        const el = document.getElementById('tool-' + tool.id);
+                        if (el) {
+                            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            el.classList.add('highlight-target');
+                            setTimeout(() => el.classList.remove('highlight-target'), 1500);
+                        }
+                    }, 100);
+                });
+                toolsContainer.appendChild(tag);
+            });
+            
+            overlayBackdrop.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeOverlay() {
+            overlayBackdrop.classList.remove('active');
+            aboutBackdrop.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        // Close overlay events
+        overlayClose.addEventListener('click', closeOverlay);
+        overlayBackdrop.addEventListener('click', (e) => {
+            if (e.target === overlayBackdrop) closeOverlay();
+        });
+        aboutClose.addEventListener('click', closeOverlay);
+        aboutBackdrop.addEventListener('click', (e) => {
+            if (e.target === aboutBackdrop) closeOverlay();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeOverlay();
+        });
+        
+        // About link
+        aboutLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            aboutBackdrop.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        // Tab switching
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        function switchToTab(tabId) {
+            tabButtons.forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.tab === tabId);
+            });
+            tabContents.forEach(content => {
+                content.classList.toggle('active', content.id === 'tab-' + tabId);
+            });
+        }
+        
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                switchToTab(button.dataset.tab);
+            });
+        });
+        
+        // Cross-links between tabs
+        document.addEventListener('click', (e) => {
+            const link = e.target.closest('a');
+            if (!link) return;
+            
+            const href = link.getAttribute('href');
+            if (href && href.startsWith('#tool-')) {
+                e.preventDefault();
+                switchToTab('tools');
+                setTimeout(() => {
+                    const el = document.getElementById(href.substring(1));
+                    if (el) {
+                        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        el.classList.add('highlight-target');
+                        setTimeout(() => el.classList.remove('highlight-target'), 1500);
+                    }
+                }, 100);
+            } else if (href && href.startsWith('#muscle-')) {
+                e.preventDefault();
+                switchToTab('muscles');
+                setTimeout(() => {
+                    const el = document.getElementById(href.substring(1));
+                    if (el) {
+                        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        el.classList.add('highlight-target');
+                        setTimeout(() => el.classList.remove('highlight-target'), 1500);
+                    }
+                }, 100);
+            }
+        });
+        
+        // Recalculate hotspots on resize
+        window.addEventListener('resize', createHotspots);
+    </script>
+</body>
+</html>

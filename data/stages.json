@@ -1,0 +1,160 @@
+[
+  {
+    "id": "whakariterite",
+    "number": 1,
+    "name_maori": "Whakariterite",
+    "name_english": "Prepare for the journey",
+    "as_stage": "Define the journey's purpose. Determine who comes and who stays behind. Gather what you'll need — physically, mentally, spiritually. Set up Te Rāwenga (the good place) by deciding what experience you want, not just where you're going.",
+    "as_state": "A mode of ongoing readiness. You return here when conditions demand reassessment — when the crew needs to change, when purpose has drifted, when you've been at sea long enough to forget why you left.",
+    "reflection_questions": [
+      "What is the purpose of this journey?",
+      "Who needs to come, and who needs to stay off?",
+      "What will we need — and what must we leave behind?"
+    ],
+    "tools": [
+      "te-whare-tapa-wha",
+      "emotional-culture-deck",
+      "theory-of-change",
+      "pestle",
+      "two-loops-model"
+    ],
+    "video": null,
+    "hotspot": {
+      "x_percent": 12,
+      "y_percent": 18,
+      "width_percent": 18,
+      "height_percent": 28
+    }
+  },
+  {
+    "id": "te-rapunga",
+    "number": 2,
+    "name_maori": "Te Rāpunga",
+    "name_english": "Venture into the unknown",
+    "as_stage": "Set off into uncertainty. Name what you're afraid of and what excites you. Move from preparation into active searching with your whole being — not just your analytical mind.",
+    "as_state": "The experience of being in the unknown. You return here whenever you face unfamiliar territory, whenever the familiar signposts disappear, whenever you need to ask again: what are we afraid of? Sometimes the moana is wild; sometimes it's flat and you're not moving. Both are Te Rāpunga.",
+    "reflection_questions": [
+      "What are we excited about?",
+      "What are we afraid of?",
+      "What opportunities emerge from that fear?"
+    ],
+    "tools": [
+      "emotional-culture-deck",
+      "more-than-words",
+      "deeper-questions",
+      "te-whare-tapa-wha"
+    ],
+    "video": null,
+    "hotspot": {
+      "x_percent": 5,
+      "y_percent": 48,
+      "width_percent": 20,
+      "height_percent": 35
+    }
+  },
+  {
+    "id": "te-kitenga",
+    "number": 3,
+    "name_maori": "Te Kitenga",
+    "name_english": "Sight tohu",
+    "as_stage": "Look for signs. Identify where you're looking and what you're seeing. Triangulate — a single data point means nothing; you need convergent signals from multiple sources.",
+    "as_state": "A mode of heightened attention and pattern recognition. You can be here while also being in Te Rāpunga. You're not acting yet — you're reading conditions, noticing what the environment, the organisation, or the situation is telling you. Stillness to see clearly.",
+    "reflection_questions": [
+      "Where are we looking for signs?",
+      "What signs are we seeing?",
+      "What patterns are forming across multiple sources?"
+    ],
+    "tools": [
+      "6-conditions",
+      "pestle",
+      "more-than-words",
+      "reflexiv-model",
+      "6-thinking-hats"
+    ],
+    "video": null,
+    "hotspot": {
+      "x_percent": 28,
+      "y_percent": 52,
+      "width_percent": 16,
+      "height_percent": 28
+    }
+  },
+  {
+    "id": "te-whainga",
+    "number": 4,
+    "name_maori": "Te Whāinga",
+    "name_english": "Make decisions based on tohu",
+    "as_stage": "Assess the signs you've gathered. Decide: push through, go around, or return? What risks can you afford? What can you not? Commit to a direction based on what you're seeing, not a predetermined plan.",
+    "as_state": "A decision point you can enter at any time. None of the choices are right or wrong — they're responses to conditions. You might cycle through multiple Te Whāinga moments in a single journey as new tohu emerge.",
+    "reflection_questions": [
+      "What decisions do we need to make, based on the signs?",
+      "What risks can we afford to take? What can we not?",
+      "Do we push through, go around, or return?"
+    ],
+    "tools": [
+      "6-thinking-hats",
+      "dvfe",
+      "theory-of-change",
+      "emotional-culture-deck"
+    ],
+    "video": null,
+    "hotspot": {
+      "x_percent": 35,
+      "y_percent": 12,
+      "width_percent": 16,
+      "height_percent": 30
+    }
+  },
+  {
+    "id": "te-whiwhinga",
+    "number": 5,
+    "name_maori": "Te Whiwhinga",
+    "name_english": "Do the do",
+    "as_stage": "Execute. Grasp what you can take hold of. Assign who does what, by when, with what support. Move from analysis to committed action.",
+    "as_state": "The mode of committed engagement. Tūwhitia te hopo, mairangitia te angitū — feel the fear and do it anyway. You're grappling with the work, making mistakes, correcting as you go. Action in a dancing landscape, not execution of a fixed plan.",
+    "reflection_questions": [
+      "Who needs to do what, and by when?",
+      "What help might they need?",
+      "What can we grasp and take hold of right now?"
+    ],
+    "tools": [
+      "te-whare-tapa-wha",
+      "reflexiv-model",
+      "emotional-culture-deck"
+    ],
+    "video": null,
+    "hotspot": {
+      "x_percent": 48,
+      "y_percent": 45,
+      "width_percent": 16,
+      "height_percent": 32
+    }
+  },
+  {
+    "id": "te-rawenga",
+    "number": 6,
+    "name_maori": "Te Rāwenga",
+    "name_english": "The good place",
+    "as_stage": "Arrive. Reflect on the journey. Celebrate what was achieved. Acknowledge the people and tohu who helped. Ask: what can we gift to others to help their future journeys?",
+    "as_state": "A mode of assessment and reflection. Is this the good place? You might arrive at your goal and realise it's not good enough. You might not reach your goal but find yourself somewhere that is. Te Rāwenga isn't about hitting targets — it's about recognising when you've arrived somewhere worth stopping.",
+    "reflection_questions": [
+      "How will we know we've arrived at the good place?",
+      "How will we celebrate, reflect, and acknowledge those who helped?",
+      "What can we gift to others to help their future journeys?"
+    ],
+    "tools": [
+      "project-funeral",
+      "reflexiv-model",
+      "pixar-story-spine",
+      "two-loops-model",
+      "deeper-questions"
+    ],
+    "video": null,
+    "hotspot": {
+      "x_percent": 70,
+      "y_percent": 20,
+      "width_percent": 22,
+      "height_percent": 45
+    }
+  }
+]
