@@ -20,10 +20,10 @@
     ],
     "video": null,
     "hotspot": {
-      "x_percent": 9,
-      "y_percent": 15,
-      "width_percent": 18,
-      "height_percent": 28
+      "x_percent": 6.5,
+      "y_percent": 157.5,
+      "width_percent": 17,
+      "height_percent": 30
     }
   },
   {
@@ -46,10 +46,10 @@
     ],
     "video": null,
     "hotspot": {
-      "x_percent": 5,
-      "y_percent": 48,
-      "width_percent": 20,
-      "height_percent": 35
+      "x_percent": 5.5,
+      "y_percent": 49.5,
+      "width_percent": 17,
+      "height_percent": 30
     }
   },
   {
@@ -73,8 +73,8 @@
     ],
     "video": null,
     "hotspot": {
-      "x_percent": 28,
-      "y_percent": 52,
+      "x_percent": 28.2,
+      "y_percent": 40.6,
       "width_percent": 16,
       "height_percent": 28
     }
@@ -99,10 +99,10 @@
     ],
     "video": null,
     "hotspot": {
-      "x_percent": 35,
-      "y_percent": 12,
+      "x_percent": 41.5,
+      "y_percent": 16,
       "width_percent": 16,
-      "height_percent": 30
+      "height_percent": 28
     }
   },
   {
@@ -124,10 +124,10 @@
     ],
     "video": null,
     "hotspot": {
-      "x_percent": 48,
-      "y_percent": 45,
-      "width_percent": 16,
-      "height_percent": 32
+      "x_percent": 52.1,
+      "y_percent": 42,
+      "width_percent": 16.4,
+      "height_percent": 28.1
     }
   },
   {
@@ -151,10 +151,10 @@
     ],
     "video": null,
     "hotspot": {
-      "x_percent": 70,
-      "y_percent": 20,
-      "width_percent": 22,
-      "height_percent": 45
+      "x_percent": 77.95,
+      "y_percent": 28.6,
+      "width_percent": 16.5,
+      "height_percent": 28.2
     }
   }
 ]
